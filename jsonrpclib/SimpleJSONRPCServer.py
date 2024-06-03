@@ -155,6 +155,30 @@ class SimpleJSONRPCDispatcher(xmlrpc.server.SimpleXMLRPCDispatcher):
 class SimpleJSONRPCRequestHandler(
         xmlrpc.server.SimpleXMLRPCRequestHandler):
 
+    def do_OPTIONS(self):
+        """
+        Handles OPTIONS requests
+        """
+        # Send it
+        self.send_response(200)
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header('Access-Control-Allow-Methods', 'GET, OPTIONS, POST')
+        self.send_header("Access-Control-Allow-Headers", "X-Requested-With")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type")
+        self.end_headers()
+
+    def do_GET(self):
+        """
+        Handles GET requests
+        """
+        # Send it
+        self.send_response(200)
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header('Access-Control-Allow-Methods', 'GET, OPTIONS, POST')
+        self.send_header("Access-Control-Allow-Headers", "X-Requested-With")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type")
+        self.end_headers()
+
     def do_POST(self):
         if not self.is_rpc_path_valid():
             self.report_404()
